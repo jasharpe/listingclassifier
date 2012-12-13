@@ -1,8 +1,32 @@
-from data import get_data
+from data import get_data, print_results
+from classifier import Classifier
+from collections import defaultdict
 
 def main():
-  listings = get_data("listings.txt")
+  # Load data from files.
+  listings = get_data("listings_light.txt")
   products = get_data("products.txt")
+
+  # Create a classifier for the provided products.
+  classifier = Classifier(products)
+
+  # Classify all listings.
+  results = defaultdict(list)
+  for listing in listings:
+    product_name = classifier.classify(listing)
+    if product_name is not None:
+      results[product_name].append(listing)
+
+  # Process results dictionary into array of Result objects.
+  processed_results = []
+  for (product_name, classified_listings) in results.items():
+    processed_results.append({
+      'product_name' : product_name,
+      'listings' : classified_listings
+    })
+
+  # Print results to "results.txt".
+  print_results("results.txt", processed_results)
 
 if __name__ == "__main__":
   main()
