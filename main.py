@@ -4,7 +4,7 @@ from collections import defaultdict
 
 def main():
   # Load data from files.
-  listings = get_data("listings_light.txt")
+  listings = get_data("listings.txt")
   products = get_data("products.txt")
 
   # Create a classifier for the provided products.
@@ -12,10 +12,14 @@ def main():
 
   # Classify all listings.
   results = defaultdict(list)
+  classified = 0
   for listing in listings:
     product_name = classifier.classify(listing)
     if product_name is not None:
+      classified += 1
       results[product_name].append(listing)
+  
+  print "Classification rate: %.02f" % (float(classified) / len(listings))
 
   # Process results dictionary into array of Result objects.
   processed_results = []
