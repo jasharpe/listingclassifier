@@ -1,7 +1,7 @@
 Listing Classifier
 =================
 
-    usage: main.py \[-h\] \[-v\] \[-d\]
+    usage: main.py [-h] [-v] [-d]
 
     Shopping listing classifier tool. Run in a directory containing listings.txt
     and products.txt. Produces results.txt.
