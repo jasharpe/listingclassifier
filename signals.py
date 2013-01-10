@@ -15,7 +15,7 @@ def tokenize(string):
           .replace(";", "")
           .replace("+", " ")
           # Some camera specific abbreviations that are erratically used. This will be useless
-          # for non-camera verticals.
+          # for non-camera verticals. 
           .replace("dmc", "")
           .replace("is", "")
           .replace("dsc", "")
