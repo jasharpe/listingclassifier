@@ -2,6 +2,7 @@ from data import get_data, print_results
 from classifier import Classifier
 import random
 import sys
+from frozendict import UnenforcedFrozenDict
 
 # A dict that provides a hash method so it can be used as the key in a dict.
 # It should not be modified after construction, but this is not enforced.
@@ -19,14 +20,10 @@ if __name__ == "__main__":
   classifier = Classifier(products)
   classified_listings = get_data("classified_listings.txt")
 
-  old_listings = map(lambda x: FakeFrozenDict(x['listing']), classified_listings)
+  old_listings = map(lambda x: UnenforcedFrozenDict(x['listing']), classified_listings)
   added = 0
   for listing in listings:
-    #print old_listings
-    #print listing
-    #print
-    if not FakeFrozenDict(listing) in old_listings:
-      #print "Not skipped"
+    if not UnenforcedFrozenDict(listing) in old_listings:
       print str(listing)
       suggested_product = classifier.classify(listing)
       if suggested_product is not None:

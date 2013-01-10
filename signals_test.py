@@ -4,11 +4,13 @@ from signals import contains_subsequence, model_name_signal, manufacturer_name_s
 class TestSignals(unittest.TestCase):
         
     def test_tokenize(self):
-      self.assertEqual(tokenize("a b c"), ["a", "b", "c"])
-      self.assertEqual(tokenize("a b  c"), ["a", "b", "c"])
-      self.assertEqual(tokenize("a DMC b c"), ["a", "b", "c"])
-      self.assertEqual(tokenize("a b DSC c"), ["a", "b", "c"])
-      self.assertEqual(tokenize("IS a DMC-b c"), ["a", "b", "c"])
+      self.assertEqual(tokenize("ab be ce"), ["ab", "be", "ce"])
+      self.assertEqual(tokenize("ab be  ce"), ["ab", "be", "ce"])
+      self.assertEqual(tokenize("ab DMC be ce"), ["ab", "be", "ce"])
+      self.assertEqual(tokenize("ab be DSC ce"), ["ab", "be", "ce"])
+      self.assertEqual(tokenize("IS ab DMC-be ce"), ["ab", "be", "ce"])
+      self.assertEqual(tokenize("IS ab DMC-be a ce"), ["ab", "be", "ace"])
+      self.assertEqual(tokenize("IS b ab DMC-be a ce"), ["bab", "be", "ace"])
         
     def test_merge_tokens(self):
       self.assertEqual(merge_tokens(["a", "b", "c"], 0), ["ab", "c"])
@@ -45,11 +47,11 @@ class TestSignals(unittest.TestCase):
     
     def test_manufacturer_name_signal(self):
       self.assertEqual(0,
-          manufacturer_name_signal({"manufacturer" : "foo"}, {"manufacturer" : "bar"}))
+          manufacturer_name_signal({"manufacturer" : "foo"}, {"manufacturer" : "bar", "title" : "..."}))
       self.assertEqual(1,
-          manufacturer_name_signal({"manufacturer" : "foo"}, {"manufacturer" : "foo"}))
+          manufacturer_name_signal({"manufacturer" : "foo"}, {"manufacturer" : "foo", "title" : "..."}))
       self.assertEqual(1,
-          manufacturer_name_signal({"manufacturer" : "foo"}, {"manufacturer" : "foo bar"}))
+          manufacturer_name_signal({"manufacturer" : "foo"}, {"manufacturer" : "foo bar", "title" : "..."}))
 
 if __name__ == '__main__':
     unittest.main()
