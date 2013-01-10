@@ -41,7 +41,7 @@ def merge_tokens(xs, merge_index):
 # Listing has "title", "manufacturer", "currency", and "price" fields.
 # Product has "product_name", "manufacturer", "model", "family", "announced-date" fields.
 
-# Strong positive signal if the model name appears in the title.
+# Checks if the model name appears in the title.
 def model_name_signal(product, listing):
   # Only consider the first 6 tokens of the listing, since interesting information is likely
   # to occur early in the listing, whereas model names late in listing are probably not the
@@ -66,8 +66,7 @@ def model_name_signal(product, listing):
   #    return match_length
   return 0
 
-# Strong negative signal if the product manufacturer isn't contained in the
-# listing's manufacturer.
+# Checks if the manufacturer appears in the manufacturer or title sections of the listing.
 def manufacturer_name_signal(product, listing):
   listing_tokens = tokenize(listing["manufacturer"])
   product_tokens = tokenize(product["manufacturer"])
@@ -78,7 +77,8 @@ def manufacturer_name_signal(product, listing):
     return contains_subsequence(listing_tokens, product_tokens)[1]
   else:
     return result
-    
+
+# Checks if the product family appears in the listing.
 def family_signal(product, listing):
   listing_tokens = tokenize(listing["title"])
   if not "family" in product:

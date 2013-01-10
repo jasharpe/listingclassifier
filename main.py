@@ -58,7 +58,8 @@ Shopping listing classifier tool. Run in a directory containing listings.txt and
       elif args.diagnostic:
         correct += 1
   
-  print "Classification rate: %.02f" % (float(classified) / len(listings))
+  if args.verbose:
+    print "Classification rate: %.02f" % (float(classified) / len(listings))
   if args.diagnostic:
     print "Total listings: %d" % len(listings)
     print "Total classified: %d" % classified
