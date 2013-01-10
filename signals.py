@@ -3,7 +3,14 @@
 # Splits a string into a series of tokens. Currently just converts to lower case and splits on
 # spaces.
 def tokenize(string):
-  return string.lower().replace("-", "").split(" ")
+  return filter(None, string.lower()
+      .replace("-", "")
+      # Some camera specific abbreviations that are spotily used and don't seem to really
+      # mean anything.
+      .replace("dmc", "")
+      .replace("is", "")
+      .replace("dsc", "")
+      .split(" "))
 
 # Returns an index at which the subsequence ys appears consecutively in order in xs, or -1 if
 # no such index exists, and the length of the matched subsequence.

@@ -24,7 +24,7 @@ class Classifier(object):
 
   # Returns the product name that most closely matches listing. If two products closely match, or
   # there are no close matches, returns None.
-  def classify(self, listing):
+  def classify(self, listing, verbose=True):
     best_ranking = -1
     best_candidates = []
     name_to_signals = {}
@@ -42,14 +42,16 @@ class Classifier(object):
           best_candidates.append(product)
 
     if len(best_candidates) == 0:
-      print "Failed on %s, because there were no candidates\n" % (str(listing))
+      if verbose:
+        print "Failed on %s, because there were no candidates\n" % (str(listing))
       return None
     elif len(best_candidates) == 1:
-      return best_candidates[0]["product_name"]
+      return best_candidates[0]
     else:
-      print "Failed on %s, because there were at least two plausible candidates:\n%s\n  It scored: %s\n%s\n  It scored: %s\n" % (
-          str(listing),
-          self.pp.pformat(best_candidates[0]), str(name_to_signals[best_candidates[0]["product_name"]]),
-          self.pp.pformat(best_candidates[1]), str(name_to_signals[best_candidates[1]["product_name"]])
-      )
+      if verbose:
+        print "Failed on %s, because there were at least two plausible candidates:\n%s\n  It scored: %s\n%s\n  It scored: %s\n" % (
+            str(listing),
+            self.pp.pformat(best_candidates[0]), str(name_to_signals[best_candidates[0]["product_name"]]),
+            self.pp.pformat(best_candidates[1]), str(name_to_signals[best_candidates[1]["product_name"]])
+        )
       return None

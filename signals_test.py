@@ -1,7 +1,14 @@
 import unittest
-from signals import contains_subsequence, model_name_signal, manufacturer_name_signal, merge_tokens
+from signals import contains_subsequence, model_name_signal, manufacturer_name_signal, merge_tokens, tokenize
 
 class TestSignals(unittest.TestCase):
+        
+    def test_tokenize(self):
+      self.assertEqual(tokenize("a b c"), ["a", "b", "c"])
+      self.assertEqual(tokenize("a b  c"), ["a", "b", "c"])
+      self.assertEqual(tokenize("a DMC b c"), ["a", "b", "c"])
+      self.assertEqual(tokenize("a b DSC c"), ["a", "b", "c"])
+      self.assertEqual(tokenize("IS a DMC-b c"), ["a", "b", "c"])
         
     def test_merge_tokens(self):
       self.assertEqual(merge_tokens(["a", "b", "c"], 0), ["ab", "c"])

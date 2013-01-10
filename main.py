@@ -14,7 +14,7 @@ def main():
   results = defaultdict(list)
   classified = 0
   for listing in listings:
-    product_name = classifier.classify(listing)
+    product_name = classifier.classify(listing)["product_name"]
     if product_name is not None:
       classified += 1
       results[product_name].append(listing)
